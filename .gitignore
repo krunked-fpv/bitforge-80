@@ -1,0 +1,8 @@
+*.bak
+*.cookie_bak
+.DS_Store
+node_modules/
+.tmp/
+.worktrees/
+coverage/
+*.log
