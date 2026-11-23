@@ -1,0 +1,115 @@
+/* BitForge-80 Pixel Optics, Integer Scaling & Warm CRT Phosphor Overlay */
+
+.bf-screen-frame {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 10px;
+  background: #08090d;
+  border: 1px solid #2b3042;
+  /* 1px glass edge specular highlight */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.68),
+    0 10px 26px rgba(0, 0, 0, 0.72);
+  overflow: hidden;
+  line-height: 0;
+}
+
+.bf-screen-frame[hidden] {
+  display: none !important;
+}
+
+/* Subtle diagonal glass specular reflection */
+.bf-screen-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background: linear-gradient(
+    132deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.018) 28%,
+    rgba(255, 255, 255, 0) 48%
+  );
+  border-radius: inherit;
+}
+
+/* Strict Nearest-Neighbor Pixelated Canvases */
+#bf-screen,
+.bf-pixel-canvas,
+.bf-sprite-canvas,
+.bf-world-canvas {
+  display: block;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  touch-action: none;
+}
+
+#bf-screen {
+  background: #12131a;
+  border-radius: 4px;
+}
+
+/* Optional Warm CRT Phosphor Sub-Pixel Aperture & Scanline Mask */
+.bf-screen-frame.bf-crt-on::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  pointer-events: none;
+  z-index: 4;
+  border-radius: 4px;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.22) 0px,
+      rgba(0, 0, 0, 0.22) 1px,
+      rgba(255, 232, 198, 0.025) 1px,
+      rgba(255, 232, 198, 0.025) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 84, 84, 0.045) 0px,
+      rgba(96, 255, 148, 0.045) 1px,
+      rgba(96, 176, 255, 0.045) 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 224, 176, 0.03) 55%,
+      rgba(8, 8, 12, 0.34) 100%
+    );
+  mix-blend-mode: screen;
+}
+
+/* Shutter-Flash Keyframes for DAILY Ritual Reset */
+@keyframes bf-shutter-flash {
+  0% {
+    filter: brightness(2.2) contrast(1.15);
+    box-shadow:
+      inset 0 0 0 2px #f6c453,
+      0 0 28px rgba(246, 196, 83, 0.72);
+  }
+  38% {
+    filter: brightness(0.35);
+    box-shadow:
+      inset 0 0 0 2px #ffffff,
+      0 0 18px rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    filter: brightness(1) contrast(1);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.68),
+      0 10px 26px rgba(0, 0, 0, 0.72);
+  }
+}
+
+.bf-shutter-flash {
+  animation: bf-shutter-flash 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
